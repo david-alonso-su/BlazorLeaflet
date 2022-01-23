@@ -38,7 +38,12 @@ window.leafletBlazor = {
             detectRetina: tileLayer.detectRetina,
             // crossOrigin
         });
-        addLayer(mapId, layer, tileLayer.id);
+        layer.addTo(maps[mapId]);
+        //addLayer(mapId, layer, tileLayer.id);
+    },
+    addMarkerCluster: function (mapId) {
+        layerMarkerCluster = L.markerClusterGroup();
+        maps[mapId].addLayer(layerMarkerCluster);
     },
     addMbTilesLayer: function (mapId, mbTilesLayer, objectReference) {
         const layer = L.tileLayer.mbTiles(mbTilesLayer.urlTemplate, {
@@ -344,12 +349,21 @@ function addPopup(layerObj, popup) {
     });
 }
 
+//function addLayer(mapId, layer, layerId) {
+//    layer.id = layerId;
+//    layers[mapId].push(layer);
+//    layer.addTo(maps[mapId]);
+//}
+
 function addLayer(mapId, layer, layerId) {
     layer.id = layerId;
     layers[mapId].push(layer);
-    layer.addTo(maps[mapId]);
+    if (layerMarkerCluster == null) {
+        layer.addTo(maps[mapId]);
+    } else {
+        layer.addTo(layerMarkerCluster);
+    }
 }
-
 // #region events
 
 // removes properties that can cause circular references
