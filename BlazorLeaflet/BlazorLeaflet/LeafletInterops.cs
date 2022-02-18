@@ -92,5 +92,8 @@ namespace BlazorLeaflet
 
         public static ValueTask ZoomOut(IJSRuntime jsRuntime, string mapId, MouseEventArgs e) =>
             jsRuntime.InvokeVoidAsync($"{_BaseObjectContainer}.zoomOut", mapId, e);
+
+        public static ValueTask<bool> IsPositionInsideBounds(IJSRuntime jsRuntime, Tuple<LatLng, LatLng> maxBounds, LatLng coordinates) =>
+            jsRuntime.InvokeAsync<bool>($"{_BaseObjectContainer}.isPositionInsideBounds", maxBounds, coordinates);
     }
 }

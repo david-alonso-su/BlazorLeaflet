@@ -1,5 +1,6 @@
 ﻿maps = {};
 layers = {};
+layerMarkerCluster = null;
 
 window.leafletBlazor = {
     create: function (map, objectReference) {
@@ -226,6 +227,10 @@ window.leafletBlazor = {
         if (map.getZoom() > map.getMinZoom()) {
             map.zoomOut(map.options.zoomDelta * (e.shiftKey ? 3 : 1));
         }
+    },
+    isPositionInsideBounds: function (maxBounds, coordinates) {
+        const mapBounds = L.latLngBounds(maxBounds.item1, maxBounds.item2);
+        return mapBounds.contains(coordinates);
     }
 };
 
@@ -358,7 +363,7 @@ function addPopup(layerObj, popup) {
 function addLayer(mapId, layer, layerId) {
     layer.id = layerId;
     layers[mapId].push(layer);
-    if (layerMarkerCluster == null) {
+    if (layerMarkerCluster === null) {
         layer.addTo(maps[mapId]);
     } else {
         layer.addTo(layerMarkerCluster);

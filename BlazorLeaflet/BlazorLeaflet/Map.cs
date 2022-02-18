@@ -195,6 +195,8 @@ namespace BlazorLeaflet
         /// </summary>
         public async Task ZoomOut(MouseEventArgs e) => await LeafletInterops.ZoomOut(_jsRuntime, Id, e);
 
+        public async Task<bool> IsPositionInsideBounds(Tuple<LatLng, LatLng> maxBounds, LatLng coordinates) => await LeafletInterops.IsPositionInsideBounds(_jsRuntime, maxBounds, coordinates);
+
         #region events
 
         public delegate void MapEventHandler(object sender, Event e);
